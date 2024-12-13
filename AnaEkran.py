@@ -1,6 +1,12 @@
 from tkinter import *
 import tkinter as tk
 from datetime import datetime
+from AracYıkama import AracYıkama
+from PersonelIslemleri import PersonelIslemleri
+from ValeHizmetleri import ValeHizmetleri
+from RaporIslemleri import RaporIslemleri
+from OtoparkIslemleri import OtoparkIslemleri  
+#from Veritabani import Veritabani
 
 ana_ekran = Tk()
 ana_ekran.geometry('1200x600')
@@ -22,84 +28,55 @@ def zaman_gostergesi_hizalama():
     etiket_genislik = etiket_zaman.winfo_reqwidth()  
     x_position = pencere_genislik - etiket_genislik - 10
     etiket_zaman.place(x=x_position, y=10)  
-    ana_ekran.after(100, zaman_gostergesi_hizalama)  
-
-def arac_yikama_penceresi():
-    yikama_pencere = Toplevel(ana_ekran)
-    yikama_pencere.geometry('1200x600')
-    yikama_pencere.title('ARAÇ YIKAMA')
-    Label(yikama_pencere, text="Araç Yıkama Hizmeti", font=("Arial", 20)).pack(pady=20)
-
-def vale_hizmeti_penceresi():
-    vale_pencere = Toplevel(ana_ekran)
-    vale_pencere.geometry('1200x600')
-    vale_pencere.title('VALE HİZMETİ')
-    Label(vale_pencere, text="Vale Hizmeti", font=("Arial", 20)).pack(pady=20)
-
-def personel_penceresi():
-    personel_pencere = Toplevel(ana_ekran)
-    personel_pencere.geometry('1200x600')
-    personel_pencere.title('PERSONEL İŞLEMLERİ')
-    Label(personel_pencere, text="Personel İşlemleri", font=("Arial", 20)).pack(pady=20)
-
-def otopark_penceresi():
-    otopark_pencere = Toplevel(ana_ekran)
-    otopark_pencere.geometry('1200x600')
-    otopark_pencere.title('OTOPARK İŞLEMLERİ')
-    Label(otopark_pencere, text="Otopark İşlemleri", font=("Arial", 20)).pack(pady=20)
-    button = tk.Button(otopark_pencere, 
-                       text="Aracın Girişini yap", 
-                       font=("Arial", 16, "bold"),  
-                       bg="green", 
-                       fg="white",  
-                       relief="raised",
-                       width=20,  
-                       height=2,  
-                       bd=5,  
-                       activebackground="dark green",  
-                       activeforeground="white",  
-                       command=Arac_ekle)
-    button.pack(pady=60)
-
-def Arac_ekle():
-    print("Araç eklendi")
-
-def rapor_penceresi():
-    rapor_pencere = Toplevel(ana_ekran)
-    rapor_pencere.geometry('1200x600')
-    rapor_pencere.title('RAPOR İŞLEMLERİ')
-    Label(rapor_pencere, text="Rapor İşlemleri", font=("Arial", 20)).pack(pady=20)
+    ana_ekran.after(100, zaman_gostergesi_hizalama)
 
 def cikis_yap():
     ana_ekran.quit()
 
 def buton_stili(buton, metin, komut, arka_plan_rengi, aktif_arka_plan_rengi):
-    buton.config(text=metin,
-    font=("Arial", 18, "bold"),
-                 bg=arka_plan_rengi,  
-                 fg="white",  
-                 relief="raised",  
-                 width=20,
-                 height=2,
-                 bd=5,
-                 activebackground=aktif_arka_plan_rengi,  
-                 activeforeground="white",  
-                 command=komut)                
+    buton.config(
+        text=metin,
+        font=("Arial", 18, "bold"),
+        bg=arka_plan_rengi,  
+        fg="white",  
+        relief="raised",  
+        width=20,
+        height=2,
+        bd=5,
+        activebackground=aktif_arka_plan_rengi,  
+        activeforeground="white",  
+        command=komut
+    )
+
+def otopark_islemleri_ac():
+    OtoparkIslemleri(ana_ekran)
+
+def arac_yıkama_ac():
+    AracYıkama(ana_ekran)
+
+def personel_islemleri_ac():
+    PersonelIslemleri(ana_ekran)
+
+def vale_hzimetleri_ac():
+    ValeHizmetleri(ana_ekran)
+
+def rapor_islemleri_ac():
+    RaporIslemleri(ana_ekran)
 
 buton_arac_yikama = Button(ana_ekran)
-buton_stili(buton_arac_yikama, "Araç Yıkama", arac_yikama_penceresi, "green", "dark green")
-
-buton_vale_hizmeti = Button(ana_ekran)
-buton_stili(buton_vale_hizmeti, "Vale Hizmeti", vale_hizmeti_penceresi, "blue", "dodger blue")
-
-buton_personel_islemleri = Button(ana_ekran)
-buton_stili(buton_personel_islemleri, "Personel İşlemleri", personel_penceresi, "orange", "dark orange")
+buton_stili(buton_arac_yikama, "Araç Yıkama", arac_yıkama_ac, "green", "dark green")
 
 buton_otopark_islemleri = Button(ana_ekran)
-buton_stili(buton_otopark_islemleri, "Otopark İşlemleri", otopark_penceresi, "red", "dark red")
+buton_stili(buton_otopark_islemleri, "Otopark İşlemleri", otopark_islemleri_ac, "red", "dark red")
+
+buton_vale_hizmeti = Button(ana_ekran)
+buton_stili(buton_vale_hizmeti, "Vale Hizmeti", vale_hzimetleri_ac, "blue", "dodger blue")
+
+buton_personel_islemleri = Button(ana_ekran)
+buton_stili(buton_personel_islemleri, "Personel İşlemleri", personel_islemleri_ac, "orange", "dark orange")
 
 buton_rapor_islemleri = Button(ana_ekran)
-buton_stili(buton_rapor_islemleri, "Rapor İşlemleri", rapor_penceresi, "purple", "dark violet")
+buton_stili(buton_rapor_islemleri, "Rapor İşlemleri", rapor_islemleri_ac, "purple", "dark violet")
 
 buton_cikis = Button(ana_ekran)
 buton_stili(buton_cikis, "Çıkış", cikis_yap, "firebrick", "dark red")
