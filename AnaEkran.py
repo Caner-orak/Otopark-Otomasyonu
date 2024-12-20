@@ -18,6 +18,8 @@ etiket_zaman.place(y=10, x=1000)
 etiket_baslik = Label(ana_ekran, text="KMÜ OTOPARK OTOMASYONU", font=("Arial", 20, "bold"), fg="black")
 etiket_baslik.grid(row=0, column=0, columnspan=2, pady=20, sticky="n")
 
+
+
 def zaman_guncelle():
     current_time = datetime.now().strftime("%Y-%m-%d  --  %H:%M:%S")
     etiket_zaman.config(text=current_time)

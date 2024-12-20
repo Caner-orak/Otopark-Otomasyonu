@@ -1,26 +1,30 @@
 import pyodbc
-import tkinter as tk
+# from OtoparkIslemleri import OtoparkIslemleri
 
-conn_str = (
+conString = (
     r"DRIVER={SQL Server};"
-    r"SERVER=.;"
-    r"DATABASE=otopark;"
+    r"SERVER=DESKTOP-DEH6QNE;"
+    r"DATABASE=otopark_otomasyonu;"
     r"Trusted_conneciton=yes;"
 )
 
-
-
-conn = pyodbc.connect(conn_str)
-cursor = conn.cursor()
+arac_ekle="exec AracEkle @PlakaNo = ?, @AracSahibiAdi = ?, @AracSahibiSoyadi = ?"
 
 
 
 
-def populate_treeview(tree, data):
-    for row in data:
-        tree.insert("", "end", values=row)
+def get_connection():
+    return pyodbc.connect(conString)
 
 
-def UyeListesi():
-    cursor.execute("Select * from Uyeler")
+def arac_listele():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM arac")
     return cursor.fetchall()
+
+def arac_ekle(plaka_no, arac_sahibi_adi, arac_sahibi_soyadi):
+    conn = get_connection()
+    conn.execute(arac_ekle, plaka_no, arac_sahibi_adi, arac_sahibi_soyadi)
+    conn.commit()
+    

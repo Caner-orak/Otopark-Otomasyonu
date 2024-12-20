@@ -1,101 +1,72 @@
 import tkinter as tk
 from tkinter import Toplevel
+import Veritabani as vt
+from tkinter import messagebox as mb
+
 
 class OtoparkIslemleri(tk.Toplevel):
     def __init__(self, master=None):
         super().__init__(master)
         self.title("Otopark İşlemleri")
-        self.geometry("1200x600")
+        self.geometry("1200x600")  
 
-        self.label = tk.Label(self, text="Otopark İşlemleri", font=("Arial", 18, "bold"), fg="black")
-        self.label.pack(pady=20)
+        txtAracSahibiAdi = tk.StringVar()
+        txtPlakaNo = tk.StringVar()
+        txtAracSahibiSoyadi = tk.StringVar()
 
-        self.buton_cerceve = tk.Frame(self)
-        self.buton_cerceve.pack(pady=10, fill="x")
 
-        self.arac_ekle_buton = tk.Button(self.buton_cerceve, text="Araç Ekle", font=("Arial", 14), bg="green", fg="white", command=self.arac_ekle)
-        self.arac_ekle_buton.pack(side="left", padx=10, expand=True)
+        label = tk.Label(self, text="Otopark İşlemler", font=("Arial", 18, "bold"), fg="black")
+        label.pack(pady=20)
 
-        self.arac_cikar_buton = tk.Button(self.buton_cerceve, text="Araç Çıkar", font=("Arial", 14), bg="blue", fg="white", command=self.arac_cikar)
-        self.arac_cikar_buton.pack(side="left", padx=10, expand=True)
+        def arac_ekle():
+            arac_sahibi = txtAracSahibiAdi.get()
+            plaka_no = txtPlakaNo.get()
+            vt.arac_ekle("plaka_no", "arac_sahibi_adi","arac_sahibi_soyadi")
+        
+        # ...existing code...
+        AracEkleButon = tk.Button(self, text="Araç Ekle", font=("Arial", 14), bg="green", fg="white", command=lambda :arac_ekle()) 
+        AracEkleButon.place(x=420, y=100)
 
-        self.arac_listele_buton = tk.Button(self.buton_cerceve, text="Araçları Listele", font=("Arial", 14), bg="orange", fg="white", command=self.arac_listele)
-        self.arac_listele_buton.pack(side="left", padx=10, expand=True)
+        AracListele = tk.Button(self, text="Mevcut Araçları Listele", font=("Arial", 14), bg="blue", fg="white") 
+        AracListele.place(x=570, y=100)
 
-        self.bilgi_cerceve = tk.Frame(self)
-        self.bilgi_cerceve.pack(pady=10, fill="both", expand=True)
+        BosParkalani= tk.Button(self, text="Boş Park Alanlarını Göster", font=("Arial", 14), bg="orange", fg="white")
+        BosParkalani.place(x=840, y=100)
 
-        self.plaka_frame = tk.Frame(self.bilgi_cerceve)
-        self.plaka_frame.pack(side="left", fill="both", expand=True, padx=10)
+        self.text_arac_sahibi_adi = tk.Entry(self,font=("Arial", 14), textvariable=txtAracSahibiAdi)
+        self.text_arac_sahibi_adi.pack(pady=130)
 
-        self.plaka_label = tk.Label(self.plaka_frame, text="Plaka Listesi", font=("Arial", 14, "bold"))
-        self.plaka_label.pack(pady=5)
-        self.plaka_alani = tk.Text(self.plaka_frame, font=("Arial", 12), wrap="word", height=10, width=40)
-        self.plaka_alani.pack(pady=5)
+        self.text_arac_sahibi_soyadi = tk.Entry(self,font=("Arial", 14), textvariable=txtAracSahibiAdi)
+        self.text_arac_sahibi_adi.pack(pady=130)
 
-        self.sahip_frame = tk.Frame(self.bilgi_cerceve)
-        self.sahip_frame.pack(side="left", fill="both", expand=True, padx=10)
+        
+        self.text_plaka_no = tk.Entry(self, font=("Arial", 14), textvariable=txtPlakaNo)
+        self.text_plaka_no.pack(pady=1)
 
-        self.sahip_label = tk.Label(self.sahip_frame, text="Araç Sahipleri", font=("Arial", 14, "bold"))
-        self.sahip_label.pack(pady=5)
-        self.sahip_alani = tk.Text(self.sahip_frame, font=("Arial", 12), wrap="word", height=10, width=40)
-        self.sahip_alani.pack(pady=5)
+        label_arac_sahibi = tk.Label(self, text="Araç Sahibi:", font=("Arial", 10, "bold"), fg="black")
+        label_arac_sahibi.place(x=343, y=206)
 
-        self.araclar_frame = tk.Frame(self.bilgi_cerceve)
-        self.araclar_frame.pack(side="left", fill="both", expand=True, padx=10)
+        label_plaka_no = tk.Label(self, text="Plaka Numarası:", font=("Arial", 10, "bold"), fg="black")
+        label_plaka_no.place(x=317, y=362)
 
-        self.araclar_label = tk.Label(self.araclar_frame, text="Varolan Araçlar", font=("Arial", 14, "bold"))
-        self.araclar_label.pack(pady=5)
-        self.araclar_alani = tk.Text(self.araclar_frame, font=("Arial", 12), wrap="word", height=10, width=40)
-        self.araclar_alani.pack(pady=5)
+        self.araclar_ve_park_alanları = tk.Text(self, height=10, width=30, font=("Arial", 14))
+        self.araclar_ve_park_alanları.place(x=840, y=180)
+        
 
         self.cikis_buton = tk.Button(self, text="Kapat", font=("Arial", 14), bg="red", fg="white", command=self.destroy)
-        self.cikis_buton.place(relx=1.0, rely=1.0, anchor="se", x=-10, y=-10)
+        self.cikis_buton.place(x=0, y=0)  
 
-    def arac_ekle(self):
-        arac_ekle_pencere = Toplevel(self)
-        arac_ekle_pencere.title("Araç Ekle")
-        arac_ekle_pencere.geometry("500x400")
+        self.bind("<Configure>", self.buton_konumlandir)
 
-        tk.Label(arac_ekle_pencere, text="Plaka No:", font=("Arial", 12)).pack(pady=10)
-        plaka_entry = tk.Entry(arac_ekle_pencere, font=("Arial", 12))
-        plaka_entry.pack(pady=10)
-
-        tk.Label(arac_ekle_pencere, text="Araç Sahibi:", font=("Arial", 12)).pack(pady=10)
-        sahibi_entry = tk.Entry(arac_ekle_pencere, font=("Arial", 12))
-        sahibi_entry.pack(pady=10)
-
-        tk.Label(arac_ekle_pencere, text="Park Edilecek Alan:", font=("Arial", 12)).pack(pady=10)
-        park_alani_entry = tk.Entry(arac_ekle_pencere, font=("Arial", 12))
-        park_alani_entry.pack(pady=10)
-
-        tk.Label(arac_ekle_pencere, text="Boş Alanlar:", font=("Arial", 12)).pack(pady=10)
-        bos_alanlar = tk.Listbox(arac_ekle_pencere, font=("Arial", 12), height=5)
-        bos_alanlar.pack(pady=10)
-        bos_alanlar.insert(tk.END, "Park Alanı 1")
-        bos_alanlar.insert(tk.END, "Park Alanı 2")
-        bos_alanlar.insert(tk.END, "Park Alanı 3")
-        bos_alanlar.insert(tk.END, "Park Alanı 4")
-        bos_alanlar.insert(tk.END, "Park Alanı 5")
-        bos_alanlar.insert(tk.END, "Park Alanı 6")
-        bos_alanlar.insert(tk.END, "Park Alanı 7")
-        bos_alanlar.insert(tk.END, "Park Alanı 8")
-        bos_alanlar.insert(tk.END, "Park Alanı 9")
-        bos_alanlar.insert(tk.END, "Park Alanı 10")
-
-        tk.Button(arac_ekle_pencere, text="Kaydet", font=("Arial", 12), bg="green", fg="white", command=lambda: self.kaydet_arac(plaka_entry.get(), sahibi_entry.get(), park_alani_entry.get(), bos_alanlar.get(tk.ACTIVE))).pack(pady=10)
-
-    def kaydet_arac(self, plaka, sahibi, park_alani, bos_alan):
-        print(f"Plaka: {plaka}, Sahibi: {sahibi}, Park Alanı: {park_alani}, Seçilen Boş Alan: {bos_alan}")
-
-    def arac_cikar(self):
+    def buton_konumlandir(self, event=None):
         pass
+        # buton_genislik = self.cikis_buton.winfo_reqwidth()
+        # buton_yukseklik = self.cikis_buton.winfo_reqheight()
+        # pencere_genislik = self.winfo_width()
+        # pencere_yukseklik = self.winfo_height()
 
-    def arac_listele(self):
-        pass
+        # x = pencere_genislik - buton_genislik - 10  
+        # y = pencere_yukseklik - buton_yukseklik - 10  
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    root.withdraw()
-    otopark = OtoparkIslemleri(master=root)
-    otopark.mainloop()
+        # self.cikis_buton.place(x=x, y=y)
+
