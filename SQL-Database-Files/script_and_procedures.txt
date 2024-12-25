@@ -1,0 +1,440 @@
+USE [master]
+GO
+/****** Object:  Database [otopark_otomasyonu]    Script Date: 25.12.2024 19:24:25 ******/
+CREATE DATABASE [otopark_otomasyonu]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'otopark_otomasyonu', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\otopark_otomasyonu.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'otopark_otomasyonu_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\otopark_otomasyonu_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [otopark_otomasyonu] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [otopark_otomasyonu].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [otopark_otomasyonu] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET RECOVERY FULL 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET  MULTI_USER 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [otopark_otomasyonu] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [otopark_otomasyonu] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'otopark_otomasyonu', N'ON'
+GO
+ALTER DATABASE [otopark_otomasyonu] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [otopark_otomasyonu] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [otopark_otomasyonu]
+GO
+/****** Object:  Table [dbo].[arac]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[arac](
+	[arac_id] [int] IDENTITY(1,1) NOT NULL,
+	[plaka_no] [nvarchar](50) NULL,
+	[arac_sahibi_adi] [nvarchar](50) NULL,
+	[arac_sahibi_soyadi] [nvarchar](50) NULL,
+ CONSTRAINT [PK_arac] PRIMARY KEY CLUSTERED 
+(
+	[arac_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[hizmet_tipi]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[hizmet_tipi](
+	[hizmet_id] [int] IDENTITY(1,1) NOT NULL,
+	[hizmet_tipi] [nvarchar](50) NULL,
+ CONSTRAINT [PK_hizmet_tipi] PRIMARY KEY CLUSTERED 
+(
+	[hizmet_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[hizmetler]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[hizmetler](
+	[hizmet_id] [int] IDENTITY(1,1) NOT NULL,
+	[giris_zamani] [date] NULL,
+	[cikis_zamani] [date] NULL,
+	[plaka_no] [nvarchar](50) NULL,
+	[musteri_ad] [nvarchar](50) NULL,
+ CONSTRAINT [PK_hizmetler] PRIMARY KEY CLUSTERED 
+(
+	[hizmet_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[musteri]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[musteri](
+	[musteri_id] [int] IDENTITY(1,1) NOT NULL,
+	[musteri_ad] [nvarchar](50) NULL,
+	[musteri_soyad] [nvarchar](50) NULL,
+	[musteri_adres] [nvarchar](50) NULL,
+	[musteri_email] [nvarchar](50) NULL,
+	[musteri_tel_no] [nvarchar](50) NULL,
+	[arac_id] [nvarchar](50) NULL,
+ CONSTRAINT [PK_musteri] PRIMARY KEY CLUSTERED 
+(
+	[musteri_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[park_alani]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[park_alani](
+	[park_alani_id] [int] NULL,
+	[park_alani_adi] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[personel]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[personel](
+	[personel_id] [int] IDENTITY(1,1) NOT NULL,
+	[personel_ad] [nvarchar](50) NULL,
+	[personel_soyad] [nvarchar](50) NULL,
+	[personel_adresi] [nvarchar](50) NULL,
+	[personel_tel_no] [nvarchar](50) NULL,
+	[personel_email] [nvarchar](50) NULL,
+	[personel_tipi] [nvarchar](50) NULL,
+	[personel_maas] [nvarchar](50) NULL,
+ CONSTRAINT [PK_personel] PRIMARY KEY CLUSTERED 
+(
+	[personel_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[arac] ON 
+GO
+INSERT [dbo].[arac] ([arac_id], [plaka_no], [arac_sahibi_adi], [arac_sahibi_soyadi]) VALUES (33, N'Caner Orak', N'06 BS 7330', N'')
+GO
+INSERT [dbo].[arac] ([arac_id], [plaka_no], [arac_sahibi_adi], [arac_sahibi_soyadi]) VALUES (34, N'Burak Çeçen', N'01 A 0101', N'')
+GO
+SET IDENTITY_INSERT [dbo].[arac] OFF
+GO
+SET IDENTITY_INSERT [dbo].[personel] ON 
+GO
+INSERT [dbo].[personel] ([personel_id], [personel_ad], [personel_soyad], [personel_adresi], [personel_tel_no], [personel_email], [personel_tipi], [personel_maas]) VALUES (3, N'Caner', N'Orak', N'Ankara', N'050064899', N'caner@mail.com', N'Yönetici', N'100')
+GO
+INSERT [dbo].[personel] ([personel_id], [personel_ad], [personel_soyad], [personel_adresi], [personel_tel_no], [personel_email], [personel_tipi], [personel_maas]) VALUES (4, N'Caner', N'Orak', N'Ankara', N'050064899', N'caner@mail.com', N'Yönetici', N'200')
+GO
+SET IDENTITY_INSERT [dbo].[personel] OFF
+GO
+/****** Object:  StoredProcedure [dbo].[AracEkle]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- Araç Ekleme Prosedürü
+create PROCEDURE [dbo].[AracEkle]
+    @PlakaNo NVARCHAR(50),
+    @AracSahibiAdi NVARCHAR(100),
+    @AracSahibiSoyadi NVARCHAR(100)
+AS
+BEGIN
+    INSERT INTO [dbo].[arac] (plaka_no, arac_sahibi_adi, arac_sahibi_soyadi)
+    VALUES (@PlakaNo, @AracSahibiAdi, @AracSahibiSoyadi);
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[AracListele]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Araç Listeleme Prosedürü
+CREATE PROCEDURE [dbo].[AracListele]
+AS
+BEGIN
+    SELECT [arac_id], [plaka_no], [arac_sahibi_adi], [arac_sahibi_soyadi]
+    FROM [dbo].[arac];
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[AracSil]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Araç Silme Prosedürü
+CREATE PROCEDURE [dbo].[AracSil]
+    @AracId INT
+AS
+BEGIN
+    DELETE FROM [dbo].[arac]
+    WHERE arac_id = @AracId;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[personel_guncelle]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[personel_guncelle]
+    @personel_id INT,
+    @personel_ad NVARCHAR(50),
+    @personel_soyad NVARCHAR(50),
+    @personel_adresi NVARCHAR(50),
+    @personel_tel_no NVARCHAR(50),
+    @personel_email NVARCHAR(50),
+    @personel_tipi NVARCHAR(50),
+    @personel_maas NVARCHAR(50)
+AS
+BEGIN
+    UPDATE dbo.personel
+    SET 
+        personel_ad = @personel_ad,
+        personel_soyad = @personel_soyad,
+        personel_adresi = @personel_adresi,
+        personel_tel_no = @personel_tel_no,
+        personel_email = @personel_email,
+        personel_tipi = @personel_tipi,
+        personel_maas = @personel_maas
+    WHERE 
+        personel_id = @personel_id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_hizmet_tipi_listele]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_hizmet_tipi_listele]
+AS
+BEGIN
+    SELECT * FROM dbo.hizmet_tipi
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_hizmet_tipi_sil]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_hizmet_tipi_sil]
+    @hizmet_id INT
+AS
+BEGIN
+    DELETE FROM dbo.hizmet_tipi
+    WHERE hizmet_id = @hizmet_id
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_hizmetler_ekle]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_hizmetler_ekle]
+    @giris_zamani DATE,
+    @cikis_zamani DATE,
+    @plaka_no NVARCHAR(50),
+    @musteri_ad NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO dbo.hizmetler (giris_zamani, cikis_zamani, plaka_no, musteri_ad)
+    VALUES (@giris_zamani, @cikis_zamani, @plaka_no, @musteri_ad)
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_hizmetler_listele]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_hizmetler_listele]
+AS
+BEGIN
+    SELECT * FROM dbo.hizmetler
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_hizmetler_sil]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_hizmetler_sil]
+    @hizmet_id INT
+AS
+BEGIN
+    DELETE FROM dbo.hizmetler
+    WHERE hizmet_id = @hizmet_id
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_musteri_ekle]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_musteri_ekle]
+    @musteri_ad NVARCHAR(50),
+    @musteri_soyad NVARCHAR(50),
+    @musteri_adres NVARCHAR(50),
+    @musteri_email NVARCHAR(50),
+    @musteri_tel_no NVARCHAR(50),
+    @arac_id NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO dbo.musteri (musteri_ad, musteri_soyad, musteri_adres, musteri_email, musteri_tel_no, arac_id)
+    VALUES (@musteri_ad, @musteri_soyad, @musteri_adres, @musteri_email, @musteri_tel_no, @arac_id)
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_musteri_listele]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_musteri_listele]
+AS
+BEGIN
+    SELECT * FROM dbo.musteri
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_musteri_sil]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_musteri_sil]
+    @musteri_id INT
+AS
+BEGIN
+    DELETE FROM dbo.musteri
+    WHERE musteri_id = @musteri_id
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_personel_ekle]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_personel_ekle]
+    @personel_id INT,
+    @personel_ad NVARCHAR(50),
+    @personel_soyad NVARCHAR(50),
+    @personel_adresi NVARCHAR(50),
+    @personel_tel_no NVARCHAR(50),
+    @personel_email NVARCHAR(50),
+    @personel_tipi NVARCHAR(50),
+	@personel_maas NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO dbo.personel (personel_id, personel_ad, personel_soyad, personel_adresi, personel_tel_no, personel_email, personel_tipi, personel_maas)
+    VALUES (@personel_id, @personel_ad, @personel_soyad, @personel_adresi, @personel_tel_no, @personel_email, @personel_tipi, @personel_maas)
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_personel_listele]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_personel_listele]
+AS
+BEGIN
+    SELECT * FROM dbo.personel
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_personel_sil]    Script Date: 25.12.2024 19:24:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_personel_sil]
+    @personel_id INT
+AS
+BEGIN
+    DELETE FROM dbo.personel
+    WHERE personel_id = @personel_id
+END
+
+GO
+USE [master]
+GO
+ALTER DATABASE [otopark_otomasyonu] SET  READ_WRITE 
+GO
