@@ -5,7 +5,7 @@ conString = (
     r"DRIVER={SQL Server};"
     r"SERVER=.;"
     r"DATABASE=otopark_otomasyonu;"
-    r"Trusted_Conneciton=yes;"
+    r"Trusted_Connection=yes;"
 )
 
 Arac_Ekle="exec AracEkle @PlakaNo = ?, @AracSahibiAdi = ?, @AracSahibiSoyadi = ?"
@@ -52,4 +52,10 @@ def personel_sil(personel_id):
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM personel WHERE personel_id = ?", personel_id)
+    cursor.commit()
+
+def personel_guncelle(personel_id, personel_adi, personel_soyadi, personel_adres, personel_telefon, personel_email, personel_tipi, personel_maas):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE personel SET personel_ad = CAST(? AS nvarchar(50)), personel_soyad = CAST(? AS nvarchar(50)), personel_adresi = CAST(? AS nvarchar(50)), personel_tel_no = CAST(? AS nvarchar(50)), personel_email = CAST(? AS nvarchar(50)), personel_tipi = CAST(? AS nvarchar(50)), personel_maas = CAST(? AS nvarchar(50)) WHERE personel_id = ?", personel_adi, personel_soyadi, personel_adres, personel_telefon, personel_email, personel_tipi, personel_maas, personel_id)
     cursor.commit()

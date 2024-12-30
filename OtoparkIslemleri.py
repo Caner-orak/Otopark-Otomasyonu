@@ -11,7 +11,7 @@ class OtoparkIslemleri(tk.Toplevel):
         self.txtAracSahibiAdi = tk.StringVar()
         self.txtPlakaNo = tk.StringVar()
         self.txtAracSahibiSoyadi = tk.StringVar()
-        self.txtAracID = tk.StringVar()  # New variable for vehicle ID
+        self.txtAracID = tk.StringVar()  
 
         label = tk.Label(self, text="Otopark İşlemler", font=("Arial", 18, "bold"), fg="black")
         label.pack(pady=20)
@@ -21,12 +21,12 @@ class OtoparkIslemleri(tk.Toplevel):
             plaka_no = self.txtPlakaNo.get()
             arac_sahibi_soyadi = self.txtAracSahibiSoyadi.get()
             vt.arac_ekle(plaka_no, arac_sahibi, arac_sahibi_soyadi)
-            araclari_goster()  # Refresh the vehicle list
+            araclari_goster()  
             
         def arac_sil(): 
             arac_id = self.txtAracID.get()
             vt.arac_sil(arac_id)
-            araclari_goster()  # Refresh the vehicle list
+            araclari_goster()  
 
         AracEkleButon = tk.Button(self, text="Araç Ekle", font=("Arial", 14), bg="green", fg="white", command=lambda: arac_ekle())
         AracEkleButon.place(x=420, y=100)

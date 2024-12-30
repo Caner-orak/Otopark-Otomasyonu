@@ -20,6 +20,9 @@ class PersonelIslemleri(tk.Toplevel):
         self.personel_listele_buton = tk.Button(self, text="Personel Listele", font=("Arial", 14), bg="blue", fg="white", command=self.personel_listele)
         self.personel_listele_buton.place(x=720, y=100)
 
+        self.personel_guncelle_buton = tk.Button(self, text="Personel Güncelle", font=("Arial", 14), bg="orange", fg="white", command=self.personel_guncelle)
+        self.personel_guncelle_buton.place(x=890, y=100)
+
         form_frame = tk.Frame(self)
         form_frame.pack(pady=20)
 
@@ -59,12 +62,12 @@ class PersonelIslemleri(tk.Toplevel):
         self.text_personel_maas.grid(row=6, column=1, padx=10, pady=5)
         
 
-        self.text_personel_listesi = tk.Text(self, height=10, width=50, font=("Arial", 14))
-        self.text_personel_listesi.place(x=640, y=220)  
+        self.text_personel_listesi = tk.Text(self, height=10, width=50, font=("Arial", 13))
+        self.text_personel_listesi.place(x=740, y=220)  
         label_personel_listesi = tk.Label(self, text="Personel Listesi", font=("Arial", 14))
         label_personel_listesi.place(x=750, y=180)  
 
-        label_silinecek_personel_id = tk.Label(form_frame, text="Silinecek Personel ID:", font=("Arial", 14))
+        label_silinecek_personel_id = tk.Label(form_frame, text="Silinecek/Güncellenecek Personel ID:", font=("Arial", 14))
         label_silinecek_personel_id.grid(row=7, column=0, padx=10, pady=5, sticky="e")
         self.silinecek_personel_id = tk.Entry(form_frame, font=("Arial", 14))
         self.silinecek_personel_id.grid(row=7, column=1, padx=10, pady=5)
@@ -112,3 +115,33 @@ class PersonelIslemleri(tk.Toplevel):
         self.text_personel_listesi.delete(1.0, tk.END)
         for personel in personel_listesi:
             self.text_personel_listesi.insert(tk.END, f"{personel}\n")
+
+    def personel_guncelle(self):
+        personel_id = self.silinecek_personel_id.get()
+        personel_adi = self.text_personel_adi.get()
+        personel_soyadi = self.text_personel_soyadi.get()
+        personel_adres = self.text_personel_adres.get()
+        personel_telefon = self.text_personel_telefon.get()
+        personel_email = self.text_personel_email.get()
+        personel_tipi = self.text_personel_tipi.get()
+        personel_maas = self.text_personel_maas.get()
+
+        if personel_id:
+            vt.personel_guncelle(personel_id, personel_adi, personel_soyadi, personel_adres, 
+                                 personel_telefon, personel_email, personel_tipi, personel_maas)
+            self.personel_listele()
+
+    def personel_guncelle(self):
+        personel_id = self.silinecek_personel_id.get()
+        personel_adi = self.text_personel_adi.get()
+        personel_soyadi = self.text_personel_soyadi.get()
+        personel_adres = self.text_personel_adres.get()
+        personel_telefon = self.text_personel_telefon.get()
+        personel_email = self.text_personel_email.get()
+        personel_tipi = self.text_personel_tipi.get()
+        personel_maas = self.text_personel_maas.get()
+
+        if personel_id:
+            vt.personel_guncelle(personel_id, personel_adi, personel_soyadi, personel_adres, 
+                                 personel_telefon, personel_email, personel_tipi, personel_maas)
+            self.personel_listele()
