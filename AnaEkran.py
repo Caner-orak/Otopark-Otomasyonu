@@ -15,7 +15,7 @@ ana_ekran.title('ANA EKRAN')
 etiket_zaman = Label(ana_ekran, font=("Arial", 15), fg="black")
 etiket_zaman.place(y=10, x=1000)
 
-etiket_baslik = Label(ana_ekran, text="KMÜ OTOPARK OTOMASYONU", font=("Arial", 20, "bold"), fg="black")
+etiket_baslik = Label(ana_ekran, text="ÖZ ORAK OTOPARK OTOMASYONU", font=("Arial", 20, "bold"), fg="black")
 etiket_baslik.grid(row=0, column=0, columnspan=2, pady=20, sticky="n")
 
 

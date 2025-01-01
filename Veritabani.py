@@ -59,3 +59,15 @@ def personel_guncelle(personel_id, personel_adi, personel_soyadi, personel_adres
     cursor = conn.cursor()
     cursor.execute("UPDATE personel SET personel_ad = CAST(? AS nvarchar(50)), personel_soyad = CAST(? AS nvarchar(50)), personel_adresi = CAST(? AS nvarchar(50)), personel_tel_no = CAST(? AS nvarchar(50)), personel_email = CAST(? AS nvarchar(50)), personel_tipi = CAST(? AS nvarchar(50)), personel_maas = CAST(? AS nvarchar(50)) WHERE personel_id = ?", personel_adi, personel_soyadi, personel_adres, personel_telefon, personel_email, personel_tipi, personel_maas, personel_id)
     cursor.commit()
+
+def park_alanlari_goster():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM park_alanlari")
+    return cursor.fetchall()
+
+def park_alani_guncelle(park_alani_id, park_alani_adi, park_alani_durumu):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE park_alanlari SET park_alani_adi = ?, park_alani_durumu = ? WHERE park_alani_id = ?", park_alani_adi, park_alani_durumu, park_alani_id)
+    cursor.commit()
