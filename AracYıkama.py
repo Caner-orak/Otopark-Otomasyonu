@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Toplevel
+import Veritabani as vt
 
 
 class AracYıkama(tk.Toplevel):
@@ -11,39 +11,52 @@ class AracYıkama(tk.Toplevel):
         label = tk.Label(self, text="Araç Yıkama", font=("Arial", 18, "bold"), fg="black")
         label.pack(pady=20)
 
-        self.cikis_buton = tk.Button(self, text="Kapat", font=("Arial", 14), bg="red", fg="white", command=self.destroy)
-        self.cikis_buton.place(x=0, y=0)  
+        Button_yikama_ekle = tk.Button(self, text="Yıkamaya Araç Ekle", font=("Arial", 18, "bold"), bg="green", fg="white", relief="raised", activebackground="darkblue", activeforeground="white", command=self.yıkama_hizmeti_ekle)
+        Button_yikama_ekle.place(x=180, y=90)
 
+        Button_personel_listele = tk.Button(self, text="Personel Listesi", font=("Arial", 18, "bold"), bg="purple", fg="white", relief="raised", activebackground="darkblue", activeforeground="white",command=self.personel_listele)
+        Button_personel_listele.place(x=875, y=90)
 
-        self.arac_yıkamaya_ekle=tk.Button(self,text="Araç Yıkamaya Ekle",font=("Arial",14),bg="green",fg="white")
-        self.arac_yıkamaya_ekle.place(x=420,y=100)
-        
-        
-        self.yıkama_gecmisi=tk.Button(self,text="Yıkama Geçmişi",font=("Arial",14),bg="blue",fg="white")
-        self.yıkama_gecmisi.place(x=670,y=100)
+        Button_arac_listele = tk.Button(self, text="Araç Listele", font=("Arial", 18, "bold"), bg="blue", fg="white", relief="raised", activebackground="darkblue", activeforeground="white", command=self.arac_listele)
+        Button_arac_listele.place(x=675, y=90)
 
-        self.text_arac_sahibi_adi = tk.Entry(self, font=("Arial", 14))
-        self.text_arac_sahibi_adi.pack(pady=130)
-        label_arac_sahibi.place(x=317, y=362)
-        label_arac_sahibi = tk.Label(self, text="Araç Sahibi:", font=("Arial", 10, "bold"), fg="black")
+        Label_plaka_no = tk.Label(self, text="Plaka No:", font=("Arial", 16, "bold"), fg="black")
+        Label_plaka_no.place(x=100, y=300)
 
-        self.text_plaka_no = tk.Entry(self, font=("Arial", 14))
-        self.text_plaka_no.pack(pady=1)
-        
-        
+        self.Txt_plaka_no = tk.Entry(self, font=("Arial", 16, "bold"), fg="black")
+        self.Txt_plaka_no.place(x=270, y=300)
 
+        Label_musteri_ad = tk.Label(self, text="Müşteri Adı:", font=("Arial", 16, "bold"), fg="black")
+        Label_musteri_ad.place(x=100, y=350)
 
-        self.bind("<Configure>", self.buton_konumlandir)
+        self.Txt_musteri_ad = tk.Entry(self, font=("Arial", 16, "bold"), fg="black")
+        self.Txt_musteri_ad.place(x=270, y=350)
 
-    def buton_konumlandir(self, event=None):
-        buton_genislik = self.cikis_buton.winfo_reqwidth()
-        buton_yukseklik = self.cikis_buton.winfo_reqheight()
-        pencere_genislik = self.winfo_width()
-        pencere_yukseklik = self.winfo_height()
+        self.Txt_bilgi_ekrani = tk.Text(self, font=("Arial", 12, "bold"), width=60, height=22)
+        self.Txt_bilgi_ekrani.place(x=600, y=160)
 
-        x = pencere_genislik - buton_genislik - 10  
-        y = pencere_yukseklik - buton_yukseklik - 10  
+    def yıkama_hizmeti_ekle(self):
+        personel_id = self.Txt_personel_id.get()
+        plaka_no = self.Txt_plaka_no.get()
+        musteri_ad = self.Txt_musteri_ad.get()
+        hizmet_tipi = "Yıkama Hizmeti"
+        hizmet_ucreti = "100"
+        vt.yıkama_hizmeti_ekle(musteri_ad, plaka_no, hizmet_tipi, hizmet_ucreti)
+        hizmet_tipi = "Yıkama Hizmeti"
+        hizmet_ucreti = "100"
+        vt.yıkama_hizmeti_ekle(musteri_ad, plaka_no, hizmet_tipi, hizmet_ucreti)
+        self.hizmetler_listele()
 
-        self.cikis_buton.place(x=x, y=y)
+    def arac_listele(self):
+        araclar = vt.arac_listele()
+        self.Txt_bilgi_ekrani.delete("1.0", tk.END)
+        for arac in araclar:
+            self.Txt_bilgi_ekrani.insert(tk.END, f"Adı: {arac[0]} - Plaka No: {arac[1]} - Araç ID: {arac[2]}\n")
 
-        
+    def personel_listele(self):
+        personeller = vt.personel_listele()
+        self.Txt_bilgi_ekrani.delete("1.0", tk.END)
+        for personel in personeller:
+            self.Txt_bilgi_ekrani.insert(tk.END, f"Adı: {personel[0]} - Soyadı: {personel[1]} - Personel ID: {personel[2]}\n")
+
+   

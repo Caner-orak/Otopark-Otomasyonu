@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [otopark_otomasyonu]    Script Date: 25.12.2024 19:24:25 ******/
+/****** Object:  Database [otopark_otomasyonu]    Script Date: 5.01.2025 19:13:52 ******/
 CREATE DATABASE [otopark_otomasyonu]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [otopark_otomasyonu] SET QUERY_STORE (OPERATION_MODE = READ_WRITE
 GO
 USE [otopark_otomasyonu]
 GO
-/****** Object:  Table [dbo].[arac]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  Table [dbo].[arac]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,7 +100,7 @@ CREATE TABLE [dbo].[arac](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[hizmet_tipi]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  Table [dbo].[hizmet_tipi]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -114,7 +114,7 @@ CREATE TABLE [dbo].[hizmet_tipi](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[hizmetler]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  Table [dbo].[hizmetler]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -125,13 +125,15 @@ CREATE TABLE [dbo].[hizmetler](
 	[cikis_zamani] [date] NULL,
 	[plaka_no] [nvarchar](50) NULL,
 	[musteri_ad] [nvarchar](50) NULL,
+	[hizmet_tipi] [nvarchar](50) NULL,
+	[hizmet_ucreti] [nvarchar](50) NULL,
  CONSTRAINT [PK_hizmetler] PRIMARY KEY CLUSTERED 
 (
 	[hizmet_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[musteri]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  Table [dbo].[musteri]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -150,17 +152,18 @@ CREATE TABLE [dbo].[musteri](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[park_alani]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  Table [dbo].[park_alanlari]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[park_alani](
+CREATE TABLE [dbo].[park_alanlari](
 	[park_alani_id] [int] NULL,
-	[park_alani_adi] [nvarchar](50) NULL
+	[park_alani_adi] [nvarchar](50) NULL,
+	[park_alani_durumu] [nvarchar](50) NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[personel]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  Table [dbo].[personel]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,23 +183,76 @@ CREATE TABLE [dbo].[personel](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+/****** Object:  Table [dbo].[vale_bilgileri]    Script Date: 5.01.2025 19:13:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[vale_bilgileri](
+	[vale_id] [int] IDENTITY(1,1) NOT NULL,
+	[vale_ad] [nvarchar](50) NULL,
+	[vale_soyad] [nvarchar](50) NULL,
+	[vale_tel_no] [nvarchar](50) NULL,
+	[vale_adres] [nvarchar](50) NULL,
+ CONSTRAINT [PK_vale_bilgileri] PRIMARY KEY CLUSTERED 
+(
+	[vale_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 SET IDENTITY_INSERT [dbo].[arac] ON 
 GO
-INSERT [dbo].[arac] ([arac_id], [plaka_no], [arac_sahibi_adi], [arac_sahibi_soyadi]) VALUES (33, N'Caner Orak', N'06 BS 7330', N'')
+INSERT [dbo].[arac] ([arac_id], [plaka_no], [arac_sahibi_adi], [arac_sahibi_soyadi]) VALUES (41, N'06 ANK 06', N'Burak', N'Çeçen')
 GO
-INSERT [dbo].[arac] ([arac_id], [plaka_no], [arac_sahibi_adi], [arac_sahibi_soyadi]) VALUES (34, N'Burak Çeçen', N'01 A 0101', N'')
+INSERT [dbo].[arac] ([arac_id], [plaka_no], [arac_sahibi_adi], [arac_sahibi_soyadi]) VALUES (42, N'06 BS 710', N'Caner', N'Orak')
+GO
+INSERT [dbo].[arac] ([arac_id], [plaka_no], [arac_sahibi_adi], [arac_sahibi_soyadi]) VALUES (61, N'58 DLK 911', N'Dilek', N'Tanrıverdi')
+GO
+INSERT [dbo].[arac] ([arac_id], [plaka_no], [arac_sahibi_adi], [arac_sahibi_soyadi]) VALUES (64, N'50 DNM 123', N'Zafer', N'Şimşek')
 GO
 SET IDENTITY_INSERT [dbo].[arac] OFF
 GO
+SET IDENTITY_INSERT [dbo].[hizmetler] ON 
+GO
+INSERT [dbo].[hizmetler] ([hizmet_id], [giris_zamani], [cikis_zamani], [plaka_no], [musteri_ad], [hizmet_tipi], [hizmet_ucreti]) VALUES (1, NULL, NULL, N'06 BS 710', N'Caner', N'Otopark Hizmeti', N'75')
+GO
+INSERT [dbo].[hizmetler] ([hizmet_id], [giris_zamani], [cikis_zamani], [plaka_no], [musteri_ad], [hizmet_tipi], [hizmet_ucreti]) VALUES (17, NULL, NULL, N'06 ANK 06', N'Burak', N'Yıkama Hizmeti', N'100')
+GO
+INSERT [dbo].[hizmetler] ([hizmet_id], [giris_zamani], [cikis_zamani], [plaka_no], [musteri_ad], [hizmet_tipi], [hizmet_ucreti]) VALUES (24, NULL, NULL, N'50 DNM 123', N'Zafer', N'Otopark', N'75')
+GO
+INSERT [dbo].[hizmetler] ([hizmet_id], [giris_zamani], [cikis_zamani], [plaka_no], [musteri_ad], [hizmet_tipi], [hizmet_ucreti]) VALUES (26, NULL, NULL, N'50 DNM 123', N'Zafer', N'Vale Hizmeti', N'250')
+GO
+INSERT [dbo].[hizmetler] ([hizmet_id], [giris_zamani], [cikis_zamani], [plaka_no], [musteri_ad], [hizmet_tipi], [hizmet_ucreti]) VALUES (27, NULL, NULL, N'50 DNM 123', N'Zafer', N'Vale Hizmeti', N'250')
+GO
+SET IDENTITY_INSERT [dbo].[hizmetler] OFF
+GO
+INSERT [dbo].[park_alanlari] ([park_alani_id], [park_alani_adi], [park_alani_durumu]) VALUES (1, N'06 BS 710', N'Dolu')
+GO
+INSERT [dbo].[park_alanlari] ([park_alani_id], [park_alani_adi], [park_alani_durumu]) VALUES (2, N'Araç Yok', N'Boş')
+GO
+INSERT [dbo].[park_alanlari] ([park_alani_id], [park_alani_adi], [park_alani_durumu]) VALUES (3, N'Araç Yok', N'Boş')
+GO
+INSERT [dbo].[park_alanlari] ([park_alani_id], [park_alani_adi], [park_alani_durumu]) VALUES (4, N'Araç Yok', N'Boş')
+GO
+INSERT [dbo].[park_alanlari] ([park_alani_id], [park_alani_adi], [park_alani_durumu]) VALUES (5, N'58 DLK 911', N'Dolu')
+GO
 SET IDENTITY_INSERT [dbo].[personel] ON 
 GO
-INSERT [dbo].[personel] ([personel_id], [personel_ad], [personel_soyad], [personel_adresi], [personel_tel_no], [personel_email], [personel_tipi], [personel_maas]) VALUES (3, N'Caner', N'Orak', N'Ankara', N'050064899', N'caner@mail.com', N'Yönetici', N'100')
+INSERT [dbo].[personel] ([personel_id], [personel_ad], [personel_soyad], [personel_adresi], [personel_tel_no], [personel_email], [personel_tipi], [personel_maas]) VALUES (15, N'Caner', N'Orak', N'Ankara', N'0552', N'Caner@mail', N'Otopark', N'15')
 GO
-INSERT [dbo].[personel] ([personel_id], [personel_ad], [personel_soyad], [personel_adresi], [personel_tel_no], [personel_email], [personel_tipi], [personel_maas]) VALUES (4, N'Caner', N'Orak', N'Ankara', N'050064899', N'caner@mail.com', N'Yönetici', N'200')
+INSERT [dbo].[personel] ([personel_id], [personel_ad], [personel_soyad], [personel_adresi], [personel_tel_no], [personel_email], [personel_tipi], [personel_maas]) VALUES (16, N'Hasan', N'Akbaş', N'Konya', N'0532', N'Hasan@mail', N'Vale', N'25')
 GO
 SET IDENTITY_INSERT [dbo].[personel] OFF
 GO
-/****** Object:  StoredProcedure [dbo].[AracEkle]    Script Date: 25.12.2024 19:24:26 ******/
+SET IDENTITY_INSERT [dbo].[vale_bilgileri] ON 
+GO
+INSERT [dbo].[vale_bilgileri] ([vale_id], [vale_ad], [vale_soyad], [vale_tel_no], [vale_adres]) VALUES (7, N'Burak', N'Çeçen', N'05313313131', N'Konya')
+GO
+INSERT [dbo].[vale_bilgileri] ([vale_id], [vale_ad], [vale_soyad], [vale_tel_no], [vale_adres]) VALUES (9, N'Melih', N'Sezer', N'05313313131', N'Eskişehir')
+GO
+SET IDENTITY_INSERT [dbo].[vale_bilgileri] OFF
+GO
+/****** Object:  StoredProcedure [dbo].[AracEkle]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -212,8 +268,9 @@ BEGIN
     VALUES (@PlakaNo, @AracSahibiAdi, @AracSahibiSoyadi);
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[AracListele]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[AracListele]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -227,8 +284,9 @@ BEGIN
     FROM [dbo].[arac];
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[AracSil]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[AracSil]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,8 +301,41 @@ BEGIN
     WHERE arac_id = @AracId;
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[personel_guncelle]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[ParkAlaniGuncelle]    Script Date: 5.01.2025 19:13:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ParkAlaniGuncelle]
+    @park_alani_id INT,
+    @park_alani_adi NVARCHAR(50),
+    @park_alani_durumu NVARCHAR(50)
+AS
+BEGIN
+    UPDATE [otopark_otomasyonu].[dbo].[park_alanlari]
+    SET park_alani_adi = @park_alani_adi,
+        park_alani_durumu = @park_alani_durumu
+    WHERE park_alani_id = @park_alani_id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[ParkAlanlariGoster]    Script Date: 5.01.2025 19:13:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ParkAlanlariGoster]
+AS
+BEGIN
+    -- Tabloyu listeleyen sorgu
+    SELECT [park_alani_id]
+         , [park_alani_adi]
+         , [park_alani_durumu]
+    FROM [otopark_otomasyonu].[dbo].[park_alanlari];
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[personel_guncelle]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -272,8 +363,9 @@ BEGIN
     WHERE 
         personel_id = @personel_id
 END
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_hizmet_tipi_listele]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_hizmet_tipi_listele]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -284,8 +376,9 @@ BEGIN
     SELECT * FROM dbo.hizmet_tipi
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_hizmet_tipi_sil]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_hizmet_tipi_sil]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -298,8 +391,9 @@ BEGIN
     WHERE hizmet_id = @hizmet_id
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_hizmetler_ekle]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_hizmetler_ekle]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -308,15 +402,18 @@ CREATE PROCEDURE [dbo].[sp_hizmetler_ekle]
     @giris_zamani DATE,
     @cikis_zamani DATE,
     @plaka_no NVARCHAR(50),
-    @musteri_ad NVARCHAR(50)
+    @musteri_ad NVARCHAR(50),
+	@hizmet_tipi NVARCHAR(50),
+	@hizmet_ucreti NVARCHAR(50)
 AS
 BEGIN
-    INSERT INTO dbo.hizmetler (giris_zamani, cikis_zamani, plaka_no, musteri_ad)
-    VALUES (@giris_zamani, @cikis_zamani, @plaka_no, @musteri_ad)
+    INSERT INTO dbo.hizmetler (giris_zamani, cikis_zamani, plaka_no, musteri_ad,hizmet_tipi,hizmet_ucreti)
+    VALUES (@giris_zamani, @cikis_zamani, @plaka_no, @musteri_ad,@hizmet_tipi,@hizmet_ucreti)
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_hizmetler_listele]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_hizmetler_listele]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -327,8 +424,9 @@ BEGIN
     SELECT * FROM dbo.hizmetler
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_hizmetler_sil]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_hizmetler_sil]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -341,8 +439,9 @@ BEGIN
     WHERE hizmet_id = @hizmet_id
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_musteri_ekle]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_musteri_ekle]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -360,8 +459,9 @@ BEGIN
     VALUES (@musteri_ad, @musteri_soyad, @musteri_adres, @musteri_email, @musteri_tel_no, @arac_id)
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_musteri_listele]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_musteri_listele]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -372,8 +472,9 @@ BEGIN
     SELECT * FROM dbo.musteri
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_musteri_sil]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_musteri_sil]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -386,8 +487,9 @@ BEGIN
     WHERE musteri_id = @musteri_id
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_personel_ekle]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_personel_ekle]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -407,8 +509,9 @@ BEGIN
     VALUES (@personel_id, @personel_ad, @personel_soyad, @personel_adresi, @personel_tel_no, @personel_email, @personel_tipi, @personel_maas)
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_personel_listele]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_personel_listele]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -419,8 +522,9 @@ BEGIN
     SELECT * FROM dbo.personel
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[sp_personel_sil]    Script Date: 25.12.2024 19:24:26 ******/
+/****** Object:  StoredProcedure [dbo].[sp_personel_sil]    Script Date: 5.01.2025 19:13:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -433,6 +537,87 @@ BEGIN
     WHERE personel_id = @personel_id
 END
 
+
+GO
+/****** Object:  StoredProcedure [dbo].[spHizmetEkle]    Script Date: 5.01.2025 19:13:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spHizmetEkle]
+    @vale_id INT,
+    @hizmet_tarihi DATETIME,
+    @hizmet_aciklama NVARCHAR(255),
+	@plaka_no nvarchar(50)
+AS
+BEGIN
+    INSERT INTO [otopark_otomasyonu].[dbo].[hizmet] 
+    ([vale_id], [hizmet_tarihi], [hizmet_aciklama], [plaka_no])
+    VALUES (@vale_id, @hizmet_tarihi, @hizmet_aciklama, @plaka_no);
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[spValeEkle]    Script Date: 5.01.2025 19:13:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spValeEkle]
+    @vale_ad NVARCHAR(50),
+    @vale_soyad NVARCHAR(50),
+    @vale_tel_no NVARCHAR(15),
+    @vale_adres NVARCHAR(255)
+AS
+BEGIN
+    INSERT INTO [otopark_otomasyonu].[dbo].[vale_bilgileri] 
+    ([vale_ad], [vale_soyad], [vale_tel_no], [vale_adres])
+    VALUES (@vale_ad, @vale_soyad, @vale_tel_no, @vale_adres);
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[spValeGuncelle]    Script Date: 5.01.2025 19:13:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spValeGuncelle]
+    @vale_id INT,
+    @vale_ad NVARCHAR(50),
+    @vale_soyad NVARCHAR(50),
+    @vale_tel_no NVARCHAR(15),
+    @vale_adres NVARCHAR(255)
+AS
+BEGIN
+    UPDATE [otopark_otomasyonu].[dbo].[vale_bilgileri]
+    SET [vale_ad] = @vale_ad,
+        [vale_soyad] = @vale_soyad,
+        [vale_tel_no] = @vale_tel_no,
+        [vale_adres] = @vale_adres
+    WHERE [vale_id] = @vale_id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[spValeListele]    Script Date: 5.01.2025 19:13:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spValeListele]
+AS
+BEGIN
+    SELECT [vale_id], [vale_ad], [vale_soyad], [vale_tel_no], [vale_adres]
+    FROM [otopark_otomasyonu].[dbo].[vale_bilgileri];
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[spValeSil]    Script Date: 5.01.2025 19:13:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spValeSil]
+    @vale_id INT
+AS
+BEGIN
+    DELETE FROM [otopark_otomasyonu].[dbo].[vale_bilgileri]
+    WHERE [vale_id] = @vale_id;
+END;
 GO
 USE [master]
 GO
