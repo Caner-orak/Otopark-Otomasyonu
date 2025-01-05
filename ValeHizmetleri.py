@@ -110,12 +110,11 @@ class ValeHizmetleri(tk.Toplevel):
         hizmet_tipi = "Vale Hizmeti"
         hizmet_ucreti = "250"
         VT.vale_hizmeti_ekle(musteri_ad, plaka_no, hizmet_tipi, hizmet_ucreti)
-        VT.vale_hizmeti_ekle(musteri_ad, plaka_no, hizmet_tipi, hizmet_ucreti)
-        self.vale_listele()
+        self.araclar_listele()
 
     def araclar_listele(self):
         araclar = VT.arac_listele()
         self.Txt_bilgi_ekrani.delete(1.0, tk.END)
         for arac in araclar:
-            arac_bilgileri = f"Sahibi: {str(arac[0])[:50]}, Plaka No: {str(arac[1])[:50]}, Araç ID: {str(arac[2])[:50]}\n"
+            arac_bilgileri = f"ID: {str(arac[0])[:50]}, Sahibi: {str(arac[2])[:50]}, Plaka No: {str(arac[1])[:50]}\n"
             self.Txt_bilgi_ekrani.insert(tk.END, arac_bilgileri)

@@ -14,7 +14,7 @@ class AracYıkama(tk.Toplevel):
         Button_yikama_ekle = tk.Button(self, text="Yıkamaya Araç Ekle", font=("Arial", 18, "bold"), bg="green", fg="white", relief="raised", activebackground="darkblue", activeforeground="white", command=self.yıkama_hizmeti_ekle)
         Button_yikama_ekle.place(x=180, y=90)
 
-        Button_personel_listele = tk.Button(self, text="Personel Listesi", font=("Arial", 18, "bold"), bg="purple", fg="white", relief="raised", activebackground="darkblue", activeforeground="white",command=self.personel_listele)
+        Button_personel_listele = tk.Button(self, text="Personel Listesi", font=("Arial", 18, "bold"), bg="purple", fg="white", relief="raised", activebackground="purple", activeforeground="white",command=self.personel_listele)
         Button_personel_listele.place(x=875, y=90)
 
         Button_arac_listele = tk.Button(self, text="Araç Listele", font=("Arial", 18, "bold"), bg="blue", fg="white", relief="raised", activebackground="darkblue", activeforeground="white", command=self.arac_listele)
@@ -36,27 +36,24 @@ class AracYıkama(tk.Toplevel):
         self.Txt_bilgi_ekrani.place(x=600, y=160)
 
     def yıkama_hizmeti_ekle(self):
-        personel_id = self.Txt_personel_id.get()
+        #personel_id = self.Txt_personel_id.get()
         plaka_no = self.Txt_plaka_no.get()
         musteri_ad = self.Txt_musteri_ad.get()
         hizmet_tipi = "Yıkama Hizmeti"
         hizmet_ucreti = "100"
         vt.yıkama_hizmeti_ekle(musteri_ad, plaka_no, hizmet_tipi, hizmet_ucreti)
-        hizmet_tipi = "Yıkama Hizmeti"
-        hizmet_ucreti = "100"
-        vt.yıkama_hizmeti_ekle(musteri_ad, plaka_no, hizmet_tipi, hizmet_ucreti)
-        self.hizmetler_listele()
+        
 
     def arac_listele(self):
         araclar = vt.arac_listele()
         self.Txt_bilgi_ekrani.delete("1.0", tk.END)
         for arac in araclar:
-            self.Txt_bilgi_ekrani.insert(tk.END, f"Adı: {arac[0]} - Plaka No: {arac[1]} - Araç ID: {arac[2]}\n")
+            self.Txt_bilgi_ekrani.insert(tk.END, f"Araç ID: {arac[0]} - Adı: {arac[2]} - Plaka No: {arac[1]} \n")
 
     def personel_listele(self):
         personeller = vt.personel_listele()
         self.Txt_bilgi_ekrani.delete("1.0", tk.END)
         for personel in personeller:
-            self.Txt_bilgi_ekrani.insert(tk.END, f"Adı: {personel[0]} - Soyadı: {personel[1]} - Personel ID: {personel[2]}\n")
+            self.Txt_bilgi_ekrani.insert(tk.END, f"ID: {personel[0]} - Adı: {personel[1]} - Soyadı: {personel[2]} \n")
 
    
